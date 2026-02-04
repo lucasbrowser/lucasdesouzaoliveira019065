@@ -20,7 +20,7 @@ public interface AlbumRepository extends JpaRepository<Album, Long> {
 
     Page<Album> findByArtistaId(Long artistaId, Pageable pageable);
 
-    Page<Album> findByNomeContainingIgnoreCase(
+    Page<Album> findByTituloContainingIgnoreCase(
             String name,
             Pageable pageable
     );
@@ -52,7 +52,7 @@ public interface AlbumRepository extends JpaRepository<Album, Long> {
         WHERE
             (:artistName IS NULL OR LOWER(ar.nome) LIKE LOWER(CONCAT('%', :artistaNome, '%')))
         AND
-            (:albumName IS NULL OR LOWER(a.nome) LIKE LOWER(CONCAT('%', :albumNome, '%')))
+            (:albumName IS NULL OR LOWER(a.titulo) LIKE LOWER(CONCAT('%', :albumNome, '%')))
         AND
             (:tipo IS NULL OR ar.tipo = :tipo)
     """)
@@ -64,9 +64,9 @@ public interface AlbumRepository extends JpaRepository<Album, Long> {
     );
 
 
-    Page<Album> findAllByOrderByNomeAsc(Pageable pageable);
+    Page<Album> findAllByOrderByTituloAsc(Pageable pageable);
 
-    Page<Album> findAllByOrderByNomeDesc(Pageable pageable);
+    Page<Album> findAllByOrderByTituloDesc(Pageable pageable);
 
 
 }

@@ -50,5 +50,5 @@ CREATE TABLE refresh_tokens (
 
     CONSTRAINT fk_token_user
         FOREIGN KEY (user_id)
-        REFERENCES users(id)
+        REFERENCES usuarios(id)
 );
