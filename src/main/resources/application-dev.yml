@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/musicdb
+    username: music
+    password: music123
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    show-sql: true
+
+minio:
+  url: http://localhost:9000
+  access-key: minio
+  secret-key: minio123
+  bucket: albums

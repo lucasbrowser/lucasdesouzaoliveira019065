@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://prod-db:5432/musicdb
+    username: music_prod
+    password: m@sikStr0ng
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    show-sql: false
+
+minio:
+  url: http://minio-prod:9000
+  access-key: minio_prod
+  secret-key: mInioStr0ng
+  bucket: albums
