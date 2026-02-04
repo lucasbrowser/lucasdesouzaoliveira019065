@@ -8,7 +8,7 @@ spring:
     name: api-music
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/musicdb
+    url: jdbc:postgresql://localhost:5432/musicadb
     username: music
     password: music123
     driver-class-name: org.postgresql.Driver
