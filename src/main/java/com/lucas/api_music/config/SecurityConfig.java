@@ -22,6 +22,12 @@ import com.lucas.api_music.security.JwtFilter;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private final RateLimitFilter rateLimitFilter;
+
+    public SecurityConfig(RateLimitFilter rateLimitFilter) {
+      this.rateLimitFilter = rateLimitFilter;
+    }
+
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http, JwtFilter jwtFilter) throws Exception {
         http
@@ -31,7 +37,8 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/auth/**", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
                 .anyRequest().authenticated()
             )
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+            .addFilterAfter(rateLimitFilter, JwtFilter.class);
 
         return http.build();
     }
