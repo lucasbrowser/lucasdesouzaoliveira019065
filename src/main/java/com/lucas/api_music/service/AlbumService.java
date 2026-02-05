@@ -1,5 +1,7 @@
 package com.lucas.api_music.service;
 
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -27,4 +29,21 @@ public class AlbumService {
     public Page<Album> listar(Pageable pageable) {
         return repository.findAll(pageable);
     }
+
+    public Optional<Album> buscarPorId(Long id) {
+        return repository.findById(id);
+    }
+
+    public Album atualizar(Long id, Album albumAtualizado) {
+
+    Album album = repository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Album não encontrado"));
+
+        album.setTitulo(albumAtualizado.getTitulo());
+        album.setArtista(albumAtualizado.getArtista());
+
+        return repository.save(album);
+    }
+
+
 }

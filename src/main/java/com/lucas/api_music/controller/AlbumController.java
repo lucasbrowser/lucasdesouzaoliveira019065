@@ -2,8 +2,11 @@ package com.lucas.api_music.controller;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,4 +34,18 @@ public class AlbumController {
     public Page<Album> listar(Pageable pageable) {
         return service.listar(pageable);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Album> buscarPorId(@PathVariable Long id) {
+        return service.buscarPorId(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Album> atualizar(@PathVariable Long id, @RequestBody Album album) {
+        return ResponseEntity.ok(service.atualizar(id, album));
+    }
+
+
 }
