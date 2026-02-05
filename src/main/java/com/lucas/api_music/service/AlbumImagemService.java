@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.lucas.api_music.model.entity.Album;
 import com.lucas.api_music.model.entity.AlbumImagem;
 import com.lucas.api_music.repository.AlbumImagemRepository;
+import com.lucas.api_music.repository.AlbumRepository;
 
 import io.minio.GetPresignedObjectUrlArgs;
 import io.minio.MinioClient;
@@ -20,6 +21,7 @@ import io.minio.http.Method;
 public class AlbumImagemService {
 
     private final AlbumImagemRepository repository;
+    private final AlbumRepository albumRepository;
     private final MinioClient minioClient;
 
     @Value("${minio.bucket}")
@@ -27,10 +29,12 @@ public class AlbumImagemService {
 
     public AlbumImagemService(
             AlbumImagemRepository repository,
-            MinioClient minioClient
+            MinioClient minioClient,
+            AlbumRepository albumRepository
     ) {
         this.repository = repository;
         this.minioClient = minioClient;
+        this.albumRepository = albumRepository;
     }
 
     // Buscar imagens do album
@@ -44,7 +48,11 @@ public class AlbumImagemService {
     }
 
     // Fazer upload da imagem
-    public AlbumImagem upload(MultipartFile file, Album album) throws Exception {
+    public AlbumImagem upload(MultipartFile file, Long albumId) throws Exception {
+
+        Album album = albumRepository.findById(albumId)
+        .orElseThrow(() -> new RuntimeException("Album não encontrado"));
+
         String objectName = UUID.randomUUID() + "_" + file.getOriginalFilename();
 
         minioClient.putObject(
