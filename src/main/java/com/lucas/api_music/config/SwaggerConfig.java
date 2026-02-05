@@ -38,8 +38,8 @@ public class SwaggerConfig {
 
     private Info apiInfo() {
         return new Info()
-                .title("API - Auth")
-                .description("Documentação Swagger - API Auth")
+                .title("API - Music")
+                .description("Documentação Swagger - API Music")
                 .version("v1");
 
     }

@@ -1,5 +1,6 @@
 package com.lucas.api_music.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -83,6 +84,38 @@ public class AlbumImagemService {
         );
     }
 
+
+    public List<AlbumImagem> uploadMultiplas(List<MultipartFile> files, Long albumId) throws Exception {
+
+        Album album = albumRepository.findById(albumId)
+            .orElseThrow(() -> new RuntimeException("Album não encontrado"));
+
+        List<AlbumImagem> result = new ArrayList<>();
+
+        for (MultipartFile file : files) {
+
+            String objectName =
+                UUID.randomUUID() + "_" + file.getOriginalFilename();
+
+            minioClient.putObject(
+                PutObjectArgs.builder()
+                    .bucket(bucket)
+                    .object(objectName)
+                    .stream(file.getInputStream(), file.getSize(), -1)
+                    .contentType(file.getContentType())
+                    .build()
+            );
+
+            AlbumImagem img = new AlbumImagem();
+            img.setAlbum(album);
+            img.setObjetoImg(file.getOriginalFilename());
+            img.setUrlAlbum(objectName);
+
+            result.add(repository.save(img));
+        }
+
+        return result;
+    }
 
 
 }

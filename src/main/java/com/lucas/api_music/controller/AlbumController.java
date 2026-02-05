@@ -1,5 +1,7 @@
 package com.lucas.api_music.controller;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
@@ -10,14 +12,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.lucas.api_music.model.entity.Album;
-import com.lucas.api_music.model.entity.AlbumImagem;
 import com.lucas.api_music.service.AlbumImagemService;
 import com.lucas.api_music.service.AlbumService;
+
+import io.swagger.v3.oas.annotations.Parameter;
 
 
 
@@ -56,11 +59,12 @@ public class AlbumController {
     }
 
     @PostMapping(value = "/{albumId}/images", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<AlbumImagem> uploadImagem(
+    public ResponseEntity<?> uploadImagem(
             @PathVariable Long albumId,
-            @RequestParam("file") MultipartFile file
+            @Parameter(description = "Arquivos de imagem")
+            @RequestPart("files") List<MultipartFile> files
     ) throws Exception {
-        return ResponseEntity.ok(albumImagemService.upload(file, albumId));
+        return ResponseEntity.ok(albumImagemService.uploadMultiplas(files, albumId));
     }
 
 }
