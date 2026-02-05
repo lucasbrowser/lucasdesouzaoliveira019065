@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.lucas.api_music.model.dto.AlbumResponse;
 import com.lucas.api_music.model.entity.Album;
 import com.lucas.api_music.service.AlbumImagemService;
 import com.lucas.api_music.service.AlbumService;
@@ -46,11 +47,18 @@ public class AlbumController {
         return service.listar(pageable);
     }
 
+    //@GetMapping("/{id}")
+    //public ResponseEntity<Album> buscarPorId(@PathVariable Long id) {
+    //    return service.buscarPorId(id)
+    //            .map(ResponseEntity::ok)
+    //            .orElse(ResponseEntity.notFound().build());
+    //}
+
     @GetMapping("/{id}")
-    public ResponseEntity<Album> buscarPorId(@PathVariable Long id) {
-        return service.buscarPorId(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<AlbumResponse> buscarPorIdComImagem(@PathVariable Long id) throws Exception {
+        return ResponseEntity.ok(
+            service.buscarComImagens(id)
+        );
     }
 
     @PutMapping("/{id}")
