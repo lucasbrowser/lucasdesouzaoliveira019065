@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.lucas.api_music.exception.AlbumNotFoundException;
+import com.lucas.api_music.exception.BusinessException;
 import com.lucas.api_music.model.dto.AlbumImageResponse;
 import com.lucas.api_music.model.dto.AlbumResponse;
 import com.lucas.api_music.model.entity.Album;
@@ -33,6 +35,9 @@ public class AlbumService {
     }
 
     public Album salvar(Album album) {
+        if(album.getTitulo() == null || album.getTitulo().isBlank()) {
+            throw new BusinessException("Título do álbum é obrigatório");
+        }
         Album salvo = repository.save(album);
         notifier.novoAlbum(salvo);
         return salvo;
@@ -48,7 +53,7 @@ public class AlbumService {
 
     public Album atualizar(Long id, Album albumAtualizado) {
         Album album = repository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Album não encontrado"));
+            .orElseThrow(() -> new AlbumNotFoundException(id));
 
         album.setTitulo(albumAtualizado.getTitulo());
         album.setArtista(albumAtualizado.getArtista());
@@ -58,7 +63,7 @@ public class AlbumService {
 
     public AlbumResponse buscarComImagens(Long id) throws Exception {
         Album album = repository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Album não encontrado"));
+            .orElseThrow(() -> new AlbumNotFoundException(id));
 
         List<AlbumImagem> imagens = albumImagemRepository.findByAlbumId(id);
 

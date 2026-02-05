@@ -5,6 +5,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import com.lucas.api_music.exception.BusinessException;
 import com.lucas.api_music.model.dto.LoginRequest;
 import com.lucas.api_music.model.dto.TokenResponse;
 import com.lucas.api_music.security.JwtService;
@@ -33,7 +34,7 @@ public class AuthService {
         );
 
         if (!auth.isAuthenticated()) {
-            throw new RuntimeException("Invalid credentials");
+            throw new BusinessException("Credenciais inválidas.");
         }
 
         String access = jwtService.generateToken(request.getUsername());
