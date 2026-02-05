@@ -18,7 +18,7 @@ public class SwaggerConfig {
     @Bean
     public GroupedOpenApi grupo() {
         return GroupedOpenApi.builder()
-                .group("api-auth")
+                .group("api-music")
                 .pathsToMatch("/**")
                 .build();
     }

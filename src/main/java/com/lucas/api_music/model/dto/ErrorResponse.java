@@ -1,4 +1,4 @@
-package com.lucas.api_music.exception;
+package com.lucas.api_music.model.dto;
 
 import java.time.LocalDateTime;
 

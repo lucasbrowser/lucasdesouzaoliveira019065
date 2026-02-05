@@ -1,47 +1,31 @@
 package com.lucas.api_music.exception;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.lucas.api_music.model.dto.ErrorResponse;
+
+import io.swagger.v3.oas.annotations.Hidden;
+
+@Hidden
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleNotFound(
-            ResourceNotFoundException ex
-    ) {
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-            .body(new ErrorResponse(
-                ex.getMessage(),
-                HttpStatus.NOT_FOUND.value()
-            ));
-    }
-
-    @ExceptionHandler(BusinessException.class)
-    public ResponseEntity<ErrorResponse> handleBusiness(
-            BusinessException ex
-    ) {
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<ErrorResponse> handleRuntime(RuntimeException ex) {
 
         return ResponseEntity.badRequest()
-            .body(new ErrorResponse(
-                ex.getMessage(),
-                HttpStatus.BAD_REQUEST.value()
-            ));
+                .body(new ErrorResponse(ex.getMessage(), 400));
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleGeneric(
-            Exception ex
-    ) {
+    public ResponseEntity<ErrorResponse> handleGeneric(Exception ex) {
 
         return ResponseEntity.internalServerError()
-            .body(new ErrorResponse(
-                "Erro interno",
-                500
-            ));
+                .body(new ErrorResponse("Erro interno", 500));
     }
+                
 }
+
 
