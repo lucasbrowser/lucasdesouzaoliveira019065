@@ -266,6 +266,22 @@ Lucas de Souza Oliveira
 
 ------------------------------------------------------------------------
 
+## 📄 Dados da Inscrição
+
+
+PROCESSO SELETIVO CONJUNTO Nº 001/2026/SEPLAG e demais Órgãos - Engenheiro da Computação- Sênior
+
+Cidade: Cuiabá
+
+Local: SECRETARIA DE ESTADO DE PLANEJAMENTO E GESTÃO
+
+Cargo: ANALISTA DE TECNOLOGIA DA INFORMAÇÃO
+
+Perfil: ENGENHEIRO DA COMPUTAÇÃO - SÊNIOR
+
+
+------------------------------------------------------------------------
+
 ## 📄 Licença
 
 Uso educacional / avaliação técnica.
