@@ -15,5 +15,7 @@ public interface RegionalRepository extends JpaRepository<Regional, RegionalId> 
         Optional<Regional> findByIdExternoAndAtivoTrue(Long idExterno);
 
         List<Regional> findByAtivoTrue();
+
+        Optional<Regional> findById(Long regionalId);
 }
 
