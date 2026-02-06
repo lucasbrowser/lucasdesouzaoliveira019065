@@ -127,6 +127,30 @@ public class AlbumImagemService {
         return result;
     }
 
+    public String gerarUrlDownload(Long imagemId) {
+        AlbumImagem imagem = repository.findById(imagemId)
+                .orElseThrow(() -> new RuntimeException("Imagem não encontrada"));
+
+        return gerarUrlDownload(imagem.getObjetoImg());
+    }
+
+    public String gerarUrlDownload(String objImagem) {
+        try {
+            return minioClient.getPresignedObjectUrl(
+                    GetPresignedObjectUrlArgs.builder()
+                            .method(Method.GET)
+                            .bucket(bucket)
+                            .object(objImagem)
+                            .expiry(60 * 30) // 30 minutos
+                            .build()
+            );
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao gerar URL pré assinada", e);
+        }
+    }
+
+
+
 
 }
 

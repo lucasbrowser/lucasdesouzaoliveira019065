@@ -75,4 +75,10 @@ public class AlbumController {
         return ResponseEntity.ok(albumImagemService.uploadMultiplas(files, albumId));
     }
 
+    @GetMapping("/{albumImagemId}/download")
+    public ResponseEntity<String> download(@PathVariable Long imagemId) {
+        String url = albumImagemService.gerarUrlDownload(imagemId);
+        return ResponseEntity.ok(url);
+    }
+
 }
