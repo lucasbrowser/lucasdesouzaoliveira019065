@@ -4,21 +4,24 @@ import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
 import jakarta.persistence.Table;
 
 @Entity
-@IdClass(RegionalId.class)
 @Table(name = "regionais")
 public class Regional {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Id
-    @Column(name = "ativo")
+    @Column(name = "ativo", nullable = false)
     private Boolean ativo;
+
+    @Column(name = "id_externo")
+    private Long idExterno;
 
     @Column(name = "nome")
     private String nome;
@@ -56,6 +59,14 @@ public class Regional {
 
     public void setDataCriacao(LocalDateTime dataCriacao) {
         this.dataCriacao = dataCriacao;
+    }
+
+    public Long getIdExterno() {
+        return idExterno;
+    }
+
+    public void setIdExterno(Long idExterno) {
+        this.idExterno = idExterno;
     }
 
     
